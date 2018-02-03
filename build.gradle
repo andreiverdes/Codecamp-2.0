@@ -1,24 +1,75 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.2.10'
+    ext.kotlin_version = '1.2.21'
+    ext.android_plugin_version = '3.1.0-alpha08'
+    ext.fabric_plugin_version = '1.24.0'
+
     repositories {
         google()
         jcenter()
+        maven { url 'https://maven.fabric.io/public' }
+        maven { url 'https://dl.bintray.com/kotlin/kotlin-eap'}
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.0-alpha08'
+        classpath "com.android.tools.build:gradle:$android_plugin_version"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "io.fabric.tools:gradle:$fabric_plugin_version"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
+
+    def travisBuildNumber = System.getenv('TRAVIS_BUILD_NUMBER') ?: 273
+    ext.versionName = "1.0.0-build" + travisBuildNumber
+    ext.versionCode = travisBuildNumber.toInteger()
+    ext.targetSdkVersion = 27
+    ext.minSdkVersion = 19
+    ext.compileSdkVersion = 27
+    ext.buildToolsVersion = "27.0.2"
+    ext.androidSupportVersion = "27.0.2"
+    ext.playServicesVersion = "11.4.2"
+    ext.testEspressoVersion = "3.0.1"
+    ext.testJunitVersion = "4.12"
+    ext.testRunner = "1.0.1"
+    ext.constraintLayoutVersion = "1.0.2"
+    ext.calligraphyVersion = "2.3.0"
+    ext.rxKotlinVersion = "2.1.0"
+    ext.rxAndroidVersion = "2.0.1"
+    ext.rxBindingVersion = "2.0.0"
+    ext.okHttp3Version = "3.8.1"
+    ext.okHttp3LoggingVersion = "3.6.0"
+    ext.retrofitVersion = "2.3.0"
+    ext.retrofit2RxJava2Version = "2.3.0"
+    ext.paperDbVersion = "2.1"
+    ext.timberVersion = "4.5.1"
+    ext.mosbyVersion = "3.0.4"
+    ext.crashlyticsVersion = "2.6.8@aar"
+    ext.daggerVersion = "2.11"
+    ext.stickyHeadersVersion = "0.4.9"
+    ext.moshiVersion = "1.5.0"
+    ext.stethoVersion = "1.5.0"
+    ext.recyclerViewAnimatorsVersion = "2.2.7"
+    ext.shadowLayoutVersion = "1.0.2"
+    ext.materialDateTimePickerVersion = "3.4.0"
+    ext.multiDexVersion = "1.0.2"
+    ext.glideVersion = "4.3.1"
+}
+
+ext {
+    travisBuild = System.getenv("TRAVIS") == "true"
+    // allows for -Dpre-dex=false to be set
+    preDexEnabled = "true" == System.getProperty("pre-dex", "true")
 }
 
 allprojects {
     repositories {
         google()
         jcenter()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+        maven { url 'https://maven.fabric.io/public' }
+        maven { url 'https://dl.bintray.com/kotlin/kotlin-eap'}
     }
 }
 
